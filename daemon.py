@@ -63,6 +63,13 @@ def load_data_config_file(config_file):
         except FileNotFoundError:
             raise Exception("No secret key file found: %s" %settings.SECRET_KEY_FILE)
 
+    if hasattr(settings, 'PASSWORD_FILE') and settings.PASSWORD_FILE:
+        try:
+            with open(settings.PASSWORD_FILE) as f:
+                settings.PASSWORD = f.readline().strip()
+        except FileNotFoundError:
+            raise Exception("No secret key file found: %s" %settings.PASSWORD_FILE)
+
 
 def load_config():
     """ Load configuration settings from chainprox.cfg. If any
@@ -116,11 +123,15 @@ def run_daemon():
 
     loop.run_until_complete(asyncio.gather(
         mng_service.start_client(
+            email=settings.USERNAME,
+            password=settings.PASSWORD,
             public_key=settings.PUBLIC_KEY,
             secret_key=settings.SECRET_KEY,
             ssl=proxy_enabled
         ),
         fetcher_central_service.start_client(
+            email=settings.USERNAME,
+            password=settings.PASSWORD,
             public_key=settings.PUBLIC_KEY,
             secret_key=settings.SECRET_KEY,
             ssl=proxy_enabled
