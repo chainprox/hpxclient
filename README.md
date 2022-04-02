@@ -55,10 +55,10 @@ projects and place them under the parent directory created in step 1.
 
 1. Prepare config file
 
-`
+ ```
    [AUTH]
    USERNAME=<your registration email in chainprox.com>
    PASSWORD=<your password in chainprox.com>
-`
+ ```
 
 1. Run `hpxqt/chainproxy.py -c <config file path>` script using `python` to start up an instance of desktop application.
